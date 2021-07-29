@@ -6,7 +6,7 @@
 
 
 function runGame(){
-    let userHealth = 500;
+    let userHealth = 200;
     let enemyHealth = 100;
     let userAttackPower = 20;
     let enemyAttackPower = 20;
@@ -52,17 +52,21 @@ function secondDialogue(hercules, nemeanLion){
 
 //Selects Hercules' attack
 function selectHerculesAttack(player1, player2){
-    let userAttack = prompt("Would you like to punch, kick, or chop the vicious Lion?").toLowerCase;
-   
-    player2[1] -= player1[2];
+    let userAttack = prompt("Would you like to punch, kick, or chop the vicious Lion?").toLowerCase();
     
-    if(player2[1] <= 0){
+    if(userAttack === "punch" || userAttack === "kick" || userAttack === "chop"){
+        
+        player2[1] -= player1[2];
+        
+        if(player2[1] <= 0){
+            console.log(`${player2[0]} has taken ${player2[2]} damage and now has ${player2[1]} health left.`);
+            alert("You have slayed the seven headed lion!");
+            console.log("You win!");
+        }else{
         console.log(`${player2[0]} has taken ${player2[2]} damage and now has ${player2[1]} health left.`);
-        alert("You have slayed the seven headed lion!");
-        console.log("You win!");
-    }else{
-    console.log(`${player2[0]} has taken ${player2[2]} damage and now has ${player2[1]} health left.`);
-    }
+        }
+
+    }else{selectHerculesAttack(player1, player2);}
 }
 
 
@@ -83,8 +87,6 @@ function lionAttack(player1, player2){
     }
 
 }
-
-
 
 
 runGame();
