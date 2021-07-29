@@ -11,11 +11,11 @@ function runGame(){
     let userAttackPower = 20;
     let enemyAttackPower = 20;
     let userAttacks = ["punch", "kick", "chop"];
-    let enemyAttacks = ["a bite", "spit acid"];
+    let enemyAttacks = ["a bite", "spit acid", "stomp"];
     let hercules = ["Hercules", userHealth, userAttackPower, userAttacks];
     let nemeanLion = ["Nemean Lion", enemyHealth, enemyAttackPower, enemyAttacks];
     initialDialogue(hercules, nemeanLion);
-    secondDialogue(hercules, nemeanLion);
+    dialogue(hercules, nemeanLion);
 }
 
 //Initiates Dialogue
@@ -34,59 +34,60 @@ function initialDialogue(hercules, nemeanLion){
 }
 
 
-//Second Iteration of dialogue
-function secondDialogue(hercules, nemeanLion){
+//Continuos Iteration of dialogue
+function dialogue(hercules, nemeanLion){
     let enemyAttack = lionAttack(hercules, nemeanLion);
     alert(`The lion has sustained damage from your attack and responds with ${enemyAttack}`);
     
     selectHerculesAttack(hercules, nemeanLion);
    
     if(hercules[1] > 0 && nemeanLion[1] > 0){
-        secondDialogue(hercules, nemeanLion);
+        dialogue(hercules, nemeanLion);
     }else{
+        if(hercules[1] > nemeanLion[1]){
+            alert("You have slayed the seven headed lion!");
+            console.log("You win!");
+        }else{
+            alert("The seven headed lion wins! You are dead");
+            console.log("The Nemean Lion Wins!");
+        }
         alert("Game Over");
         console.log("Game Over!");
     }
 }
 
 
+
+
 //Selects Hercules' attack
 function selectHerculesAttack(player1, player2){
+    
     let userAttack = prompt("Would you like to punch, kick, or chop the vicious Lion?").toLowerCase();
     
-    if(userAttack === "punch" || userAttack === "kick" || userAttack === "chop"){
-        
-        player2[1] -= player1[2];
-        
-        if(player2[1] <= 0){
-            console.log(`${player2[0]} has taken ${player2[2]} damage and now has ${player2[1]} health left.`);
-            alert("You have slayed the seven headed lion!");
-            console.log("You win!");
-        }else{
-        console.log(`${player2[0]} has taken ${player2[2]} damage and now has ${player2[1]} health left.`);
-        }
-
-    }else{selectHerculesAttack(player1, player2);}
+    if(userAttack === "punch" || userAttack === "kick" || userAttack === "chop"){         
+        attack(player1, player2);        
+    }else{
+        selectHerculesAttack(player1, player2);
+    }
 }
+
+
 
 
 //Randomly selects lion attack
 function lionAttack(player1, player2){
 
-    let attack = Math.floor(Math.random() * player2[3].length);
+    let attackType = Math.floor(Math.random() * player2[3].length);
+    attack( player2, player1);
+    return player2[3][attackType];
     
-    player1[1] -= player2[2];
-    
-    if(player1[1] <= 0){
-        console.log(`${player1[0]} has taken ${player1[2]} damage and now has ${player1[1]} health left.`);
-        alert("The seven headed lion wins! You are dead");
-        console.log("The Nemean Lion Wins!");
-    }else{
-    console.log(`${player1[0]} has taken ${player1[2]} damage and now has ${player1[1]} health left.`);
-    return player2[3][attack];
-    }
-
 }
 
+
+function attack( attacker, attackee){
+    attackee[1] -= attacker[2]; //reduces health of attackee
+
+    console.log(`${attackee[0]} has taken ${attacker[2]} damage and now has ${attackee[1]} health left.`);  
+}
 
 runGame();
