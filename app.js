@@ -18,6 +18,7 @@ function runGame(){
     dialogue(hercules, nemeanLion);
 }
 
+
 //Initiates Dialogue
 function initialDialogue(hercules, nemeanLion){
     alert("You are Hercules, the greatest of the " +
@@ -29,6 +30,7 @@ function initialDialogue(hercules, nemeanLion){
     let enemyAttack = lionAttack(hercules, nemeanLion);
 
     alert(`You walk into an open field and the nine-headed Lernean Hydra spots you and attacks you with ${enemyAttack}.`);
+    alert(`${hercules[0]} has taken damage and now has ${hercules[1]} health left.`)
 
     selectHerculesAttack(hercules, nemeanLion);
 }
@@ -39,10 +41,12 @@ function dialogue(hercules, nemeanLion){
 
     while(hercules[1] > 0 && nemeanLion[1] > 0){
         let enemyAttack = lionAttack(hercules, nemeanLion);
-        alert(`The lion has sustained damage from your attack and responds with ${enemyAttack}`);
-       
+        alert(`The lion has sustained damage from your attack leaving it with ${nemeanLion[1]} health and responds with ${enemyAttack}`);
+           
         if(hercules[1]>0){
+        alert(`${hercules[0]} has taken damage and now has ${hercules[1]} health left.`)
         selectHerculesAttack(hercules, nemeanLion);
+        
         }
     }
         if(hercules[1] > nemeanLion[1]){
@@ -120,7 +124,7 @@ function attack( attacker, attackee, damage){
     attackee[1] -= damage; //reduces health of attackee
 
     console.log(`${attackee[0]} has taken ${damage} damage and now has ${attackee[1]} health left.`);  
-    alert(`${attackee[0]} has taken ${damage} damage and now has ${attackee[1]} health left.`);
+    
 }
 
 runGame();
