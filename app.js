@@ -6,7 +6,7 @@
 
 
 function runGame(){
-    let userHealth = 200;
+    let userHealth = 100;
     let enemyHealth = 100;
     let userAttackPower = 20;
     let enemyAttackPower = 20;
@@ -36,16 +36,17 @@ function initialDialogue(hercules, nemeanLion){
 
 //Continuos Iteration of dialogue
 function dialogue(hercules, nemeanLion){
-    let enemyAttack = lionAttack(hercules, nemeanLion);
-    alert(`The lion has sustained damage from your attack and responds with ${enemyAttack}`);
-    
-    selectHerculesAttack(hercules, nemeanLion);
-   
-    if(hercules[1] > 0 && nemeanLion[1] > 0){
-        dialogue(hercules, nemeanLion);
-    }else{
+
+    while(hercules[1] > 0 && nemeanLion[1] > 0){
+        let enemyAttack = lionAttack(hercules, nemeanLion);
+        alert(`The lion has sustained damage from your attack and responds with ${enemyAttack}`);
+       
+        if(hercules[1]>0){
+        selectHerculesAttack(hercules, nemeanLion);
+        }
+    }
         if(hercules[1] > nemeanLion[1]){
-            alert("You have slayed the seven headed lion!");
+            alert("You have slayed the seven headed lion and rescued Cerberus!");
             console.log("You win!");
         }else{
             alert("The seven headed lion wins! You are dead");
@@ -53,7 +54,7 @@ function dialogue(hercules, nemeanLion){
         }
         alert("Game Over");
         console.log("Game Over!");
-    }
+   
 }
 
 
@@ -63,11 +64,23 @@ function dialogue(hercules, nemeanLion){
 function selectHerculesAttack(player1, player2){
     
     let userAttack = prompt("Would you like to punch, kick, or chop the vicious Lion?").toLowerCase();
-    
-    if(userAttack === "punch" || userAttack === "kick" || userAttack === "chop"){         
-        attack(player1, player2);        
-    }else{
-        selectHerculesAttack(player1, player2);
+    let damage = 0;
+
+    switch(userAttack){
+        case "punch":
+            damage = 15
+            attack(player1, player2, damage);
+            break;
+        case "kick":
+            damage = 25;
+            attack(player1, player2, damage);
+            break;
+        case "chop":
+            damage = 20;
+            attack(player1, player2, damage);
+            break;
+        default:
+            selectHerculesAttack(player1, player2);
     }
 }
 
@@ -78,16 +91,36 @@ function selectHerculesAttack(player1, player2){
 function lionAttack(player1, player2){
 
     let attackType = Math.floor(Math.random() * player2[3].length);
-    attack( player2, player1);
-    return player2[3][attackType];
+    let damage = 0;
+
+    switch(attackType){
+        case 0:
+            damage = 20;
+            attack( player2, player1, damage);
+            return player2[3][0];
+            break;
+        case 1:
+            damage = 25;
+            attack( player2, player1, damage);
+            return player2[3][1];
+            break;
+        case 2:
+            damage = 15;
+            attack( player2, player1, damage);
+            return player2[3][2];
+            break;
+    }
+
+
     
 }
 
 
-function attack( attacker, attackee){
-    attackee[1] -= attacker[2]; //reduces health of attackee
+function attack( attacker, attackee, damage){
+    attackee[1] -= damage; //reduces health of attackee
 
-    console.log(`${attackee[0]} has taken ${attacker[2]} damage and now has ${attackee[1]} health left.`);  
+    console.log(`${attackee[0]} has taken ${damage} damage and now has ${attackee[1]} health left.`);  
+    alert(`${attackee[0]} has taken ${damage} damage and now has ${attackee[1]} health left.`);
 }
 
 runGame();
