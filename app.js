@@ -19,7 +19,7 @@ function runGame(){
 }
 
 
-//Initiates Dialogue
+//Initiates initial Dialogue
 function initialDialogue(hercules, nemeanLion){
     alert("You are Hercules, the greatest of the " +
     "Greek Heroes! You have been tasked by King Eurystheus " + 
@@ -41,14 +41,16 @@ function dialogue(hercules, nemeanLion){
 
     while(hercules[1] > 0 && nemeanLion[1] > 0){
         let enemyAttack = lionAttack(hercules, nemeanLion);
-        alert(`The lion has sustained damage from your attack leaving it with ${nemeanLion[1]} health and responds with ${enemyAttack}`);
+        
+        alert("The lion has sustained damage from your attack leaving it with " +
+        `${nemeanLion[1]} health and responds with ${enemyAttack}`);
            
         if(hercules[1]>0){
         alert(`${hercules[0]} has taken damage and now has ${hercules[1]} health left.`)
         selectHerculesAttack(hercules, nemeanLion);
-        
         }
     }
+
         if(hercules[1] > nemeanLion[1]){
             alert("You have slayed the seven headed lion and rescued Cerberus!");
             console.log("You win!");
@@ -56,8 +58,9 @@ function dialogue(hercules, nemeanLion){
             alert("The seven headed lion wins! You are dead");
             console.log("The Nemean Lion Wins!");
         }
-        alert("Game Over");
-        console.log("Game Over!");
+
+    alert("Game Over");
+    console.log("Game Over!");
    
 }
 
@@ -114,9 +117,6 @@ function lionAttack(player1, player2){
             return player2[3][2];
             break;
     }
-
-
-    
 }
 
 
